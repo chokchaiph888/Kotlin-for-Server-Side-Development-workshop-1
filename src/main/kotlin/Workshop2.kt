@@ -5,7 +5,7 @@ data class Product(val name: String, val price: Double, val category: String)
 
 fun main() {
     // 2. สร้างรายการสินค้าตัวอย่าง (List<Product>)
-    // สินค้า name = "Laptop", price = 35000.0, category = "Electronics"
+    //สินค้า name = "Laptop", price = 35000.0, category = "Electronics"
     // สินค้า name = "Smartphone", price = 25000.0, category = "Electronics"
     // สินค้า name = "T-shirt", price = 450.0, category = "Apparel"
     // สินค้า name = "Monitor", price = 7500.0, category = "Electronics"
@@ -55,6 +55,26 @@ fun main() {
 
     println("วิธีที่ 2: ใช้ .asSequence() (ขั้นสูง)")
     println("ผลรวมราคาสินค้า Electronics ที่ราคา > 500 บาท: $totalElecPriceOver500Sequence บาท")
+    println("--------------------------------------------------")
+
+
+    // 5. โจทย์เสริม: แบ่งกลุ่มสินค้าตามช่วงราคา (ใช้ groupBy + when)
+    // กลุ่มที่ราคาไม่เกิน 1,000 บาท
+    // กลุ่มที่ราคา 1,000 - 9,999 บาท
+    // กลุ่มที่ราคา 10,000 บาทขึ้นไป
+    val groupedByPriceRange = products.groupBy { product ->
+        when {
+            product.price <= 1000 -> "ไม่เกิน 1,000 บาท"
+            product.price in 1000.0..9999.99 -> "1,000 - 9,999 บาท"
+            else -> "10,000 บาทขึ้นไป"
+        }
+    }
+
+    println("แบ่งกลุ่มสินค้าตามช่วงราคา:")
+    groupedByPriceRange.forEach { (range, group) ->
+        println("กลุ่ม: $range")
+        group.forEach { println("  - ${it.name} (${it.price} บาท)") }
+    }
     println("--------------------------------------------------")
 
 
